@@ -79,8 +79,50 @@
     button:hover {
       background-color: darkgreen;
     }
+    
+    .result { 
+      background-color: white;
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: left;
+    }
   </style>
 </head>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('checkForm');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const data = localStorage.getItem(email);
+
+      if (data) {
+        const reservation = JSON.parse(data);
+        resultDiv.innerHTML = `
+          <h3>Reservation Found</h3>
+          <p><strong>Name:</strong> ${reservation.fullname}</p>
+          <p><strong>From:</strong> ${reservation.from}</p>
+          <p><strong>To:</strong> ${reservation.to}</p>
+          <p><strong>Departure Date:</strong> ${reservation.departure}</p>
+          <p><strong>Return Date:</strong> ${reservation.return || 'N/A'}</p>
+          <p><strong>Class:</strong> ${reservation.class}</p>
+          <p><strong>Passengers:</strong> ${reservation.passengers}</p>
+        `;
+      } else {
+        resultDiv.innerHTML = `<p>No reservation found for: <strong>${email}</strong></p>`;
+      }
+
+      resultDiv.style.display = 'block';
+    });
+  });
+</script>
 
 <body>
 
