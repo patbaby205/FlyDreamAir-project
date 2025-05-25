@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
     }
 
     .top-banner {
@@ -40,6 +39,48 @@
     .menu a:hover {
       background-color: #575757;
     }
+
+    .store-container {
+      max-width: 700px;
+      margin: 0 auto 40px auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .item label {
+      flex: 1;
+    }
+
+    .item input[type="number"] {
+      width: 60px;
+      padding: 5px;
+      margin-left: 10px;
+    }
+
+    button {
+      background-color: green;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      display: block;
+      margin: 20px auto 0 auto;
+    }
+
+    button:hover {
+      background-color: darkgreen;
+    }
   </style>
 </head>
 <body>
@@ -53,11 +94,40 @@
     <a href="book_flights.html">Book Flights</a>
     <a href="flight_reservations.html">Flight Reservations</a>
     <a href="store.html">In-flight Services</a>
-    
   </div>
 
   <div class="heading">
     In-Flight Store
+  </div>
+
+  <div class="store-container">
+    <form action="submit_order.php" method="post">
+      <div class="item">
+        <label><input type="checkbox" name="items[]" value="Doritos"> Doritos $3.00</label>
+        <input type="number" name="Chips_qty" min="0" value="0">
+      </div>
+      <div class="item">
+        <label><input type="checkbox" name="items[]" value="Mentos"> Mentos $0.50</label>
+        <input type="number" name="Mentos_qty" min="0" value="0">
+      </div>
+      <div class="item">
+        <label><input type="checkbox" name="items[]" value="Sprite"> Sprite 250ml $1.50</label>
+        <input type="number" name="Sprite_qty" min="0" value="0">
+      </div>
+      <div class="item">
+        <label><input type="checkbox" name="items[]" value="Coffee"> Coffee $2.00</label>
+        <input type="number" name="Coffee_qty" min="0" value="0">
+      </div>
+      <div class="item">
+        <label><input type="checkbox" name="items[]" value="Juice"> Apple Juice $1.00</label>
+        <input type="number" name="Juice_qty" min="0" value="0">
+      </div>
+      <div class="item">
+        <label><input type="checkbox" name="items[]" value="Pringles"> Pringles $3.50</label>
+        <input type="number" name="Pringles_qty" min="0" value="0">
+      </div>
+      <button type="submit">Place Order</button>
+    </form>
   </div>
 
 </body>
