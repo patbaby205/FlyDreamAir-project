@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a Flight - FlyDreamAir</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
     }
 
     .top-banner {
@@ -40,6 +42,43 @@
     .menu a:hover {
       background-color: #575757;
     }
+
+    form {
+      background: white;
+      max-width: 600px;
+      margin: 0 auto 40px auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: green;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: darkgreen;
+    }
   </style>
 </head>
 <body>
@@ -53,12 +92,43 @@
     <a href="book_flights.html">Book Flights</a>
     <a href="flight_reservations.html">Flight Reservations</a>
     <a href="store.html">In-flight Services</a>
-    
   </div>
 
   <div class="heading">
-    Book a flight
+    Book a Flight
   </div>
+
+  <form action="submit_booking.php" method="post">
+    <label for="fullname">Full Name</label>
+    <input type="text" id="fullname" name="fullname" required>
+
+    <label for="email">Email Address</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="from">Departure City</label>
+    <input type="text" id="from" name="from" required>
+
+    <label for="to">Destination City</label>
+    <input type="text" id="to" name="to" required>
+
+    <label for="departure">Departure Date</label>
+    <input type="date" id="departure" name="departure" required>
+
+    <label for="return">Return Date (optional)</label>
+    <input type="date" id="return" name="return">
+
+    <label for="class">Class</label>
+    <select id="class" name="class">
+      <option value="economy">Economy</option>
+      <option value="business">Business</option>
+      <option value="first">First Class</option>
+    </select>
+
+    <label for="passengers">Number of Passengers</label>
+    <input type="number" id="passengers" name="passengers" min="1" value="1" required>
+
+    <button type="submit">Book Flight</button>
+  </form>
 
 </body>
 </html>
