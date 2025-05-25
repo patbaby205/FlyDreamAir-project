@@ -81,6 +81,31 @@
     }
   </style>
 </head>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('bookingForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const reservation = {
+        fullname: document.getElementById('fullname').value,
+        email: document.getElementById('email').value,
+        from: document.getElementById('from').value,
+        to: document.getElementById('to').value,
+        departure: document.getElementById('departure').value,
+        return: document.getElementById('return').value,
+        class: document.getElementById('class').value,
+        passengers: document.getElementById('passengers').value
+      };
+
+      localStorage.setItem(reservation.email, JSON.stringify(reservation));
+      alert('Flight booked successfully!');
+      document.getElementById('bookingForm').reset();
+    });
+  });
+</script>
+
+
 <body>
 
   <div class="top-banner">
@@ -98,7 +123,7 @@
     Book a Flight
   </div>
 
-  <form action="submit_booking.php" method="post">
+  <form id="bookingForm">
     <label for="fullname">Full Name</label>
     <input type="text" id="fullname" name="fullname" required>
 
