@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>In-Flight Store - FlyDreamAir</title>
   <style>
     body {
       margin: 0;
@@ -49,6 +52,14 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
+    .balance {
+      text-align: right;
+      font-weight: bold;
+      margin-bottom: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+
     .item {
       display: flex;
       justify-content: space-between;
@@ -81,6 +92,13 @@
     button:hover {
       background-color: darkgreen;
     }
+
+    .message {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 16px;
+      color: red;
+    }
   </style>
 </head>
 <body>
@@ -101,34 +119,70 @@
   </div>
 
   <div class="store-container">
-    <form action="submit_order.php" method="post">
+    <div class="balance" id="balance">Bank Balance: $50.00</div>
+
+    <form id="storeForm">
       <div class="item">
-        <label><input type="checkbox" name="items[]" value="Doritos"> Doritos $3.00</label>
-        <input type="number" name="Chips_qty" min="0" value="0">
+        <label><input type="checkbox" name="items" value="Doritos" data-price="3"> Doritos ($3)</label>
+        <input type="number" name="Doritos_qty" min="1" value="1" />
       </div>
       <div class="item">
-        <label><input type="checkbox" name="items[]" value="Mentos"> Mentos $0.50</label>
-        <input type="number" name="Mentos_qty" min="0" value="0">
+        <label><input type="checkbox" name="items" value="Milky way" data-price="4"> Milky way ($4)</label>
+        <input type="number" name="Milky way_qty" min="1" value="1" />
       </div>
       <div class="item">
-        <label><input type="checkbox" name="items[]" value="Sprite"> Sprite 250ml $1.50</label>
-        <input type="number" name="Sprite_qty" min="0" value="0">
+        <label><input type="checkbox" name="items" value="Sprite" data-price="2.5"> Sprite ($2.50)</label>
+        <input type="number" name="Soda_qty" min="1" value="1" />
       </div>
       <div class="item">
-        <label><input type="checkbox" name="items[]" value="Coffee"> Coffee $2.00</label>
-        <input type="number" name="Coffee_qty" min="0" value="0">
+        <label><input type="checkbox" name="items" value="Coffee" data-price="3.5"> Coffee ($3.50)</label>
+        <input type="number" name="Coffee_qty" min="1" value="1" />
       </div>
       <div class="item">
-        <label><input type="checkbox" name="items[]" value="Juice"> Apple Juice $1.00</label>
-        <input type="number" name="Juice_qty" min="0" value="0">
+        <label><input type="checkbox" name="items" value="Apple Juice" data-price="3"> Apple Juice ($3)</label>
+        <input type="number" name="Apple Juice_qty" min="1" value="1" />
       </div>
       <div class="item">
-        <label><input type="checkbox" name="items[]" value="Pringles"> Pringles $3.50</label>
-        <input type="number" name="Pringles_qty" min="0" value="0">
+        <label><input type="checkbox" name="items" value="Pringles" data-price="2"> Pringles ($2)</label>
+        <input type="number" name="Pringles_qty" min="1" value="1" />
       </div>
-      <button type="submit">Place Order</button>
+
+      <button type="button" onclick="placeOrder()">Place Order</button>
+      <div class="message" id="message"></div>
     </form>
   </div>
+
+  <script>
+    let balance = 50.0;
+
+    function placeOrder() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"][name="items"]');
+      let total = 0;
+
+      checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+          const item = checkbox.value;
+          const price = parseFloat(checkbox.dataset.price);
+          const qtyInput = document.querySelector(`input[name="${item.replace(/ /g, '_')}_qty"]`);
+          const qty = parseInt(qtyInput.value) || 0;
+          total += price * qty;
+        }
+      });
+
+      const messageDiv = document.getElementById('message');
+
+      if (total > balance) {
+        messageDiv.textContent = `Insufficient balance. Your total is $${total.toFixed(2)}, but you only have $${balance.toFixed(2)}.`;
+      } else if (total === 0) {
+        messageDiv.textContent = "Please select at least one item.";
+      } else {
+        balance -= total;
+        document.getElementById('balance').textContent = `Bank Balance: $${balance.toFixed(2)}`;
+        messageDiv.style.color = "green";
+        messageDiv.textContent = `Order placed! Total: $${total.toFixed(2)}. Thank you!`;
+      }
+    }
+  </script>
 
 </body>
 </html>
